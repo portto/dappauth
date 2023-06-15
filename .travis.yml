@@ -8,4 +8,4 @@ branches:
 before_install:
   - go get github.com/mattn/goveralls
 script:
-  - $GOPATH/bin/goveralls -service=travis-ci -package github.com/dapperlabs/dappauth -v
+  - $GOPATH/bin/goveralls -service=travis-ci -package github.com/portto/dappauth -v

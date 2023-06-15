@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/dapperlabs/dappauth.svg?branch=master)](https://travis-ci.com/dapperlabs/dappauth)
-[![Coverage Status](https://coveralls.io/repos/github/dapperlabs/dappauth/badge.svg?branch=master)](https://coveralls.io/github/dapperlabs/dappauth?branch=master)
 # dappauth
 
 ## Example usage within a webserver
@@ -12,7 +10,7 @@ import (
 	"net/http"
 
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/dapperlabs/dappauth"
+	"github.com/portto/dappauth"
 )
 
 // AuthenticationHandler ..
