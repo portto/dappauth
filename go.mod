@@ -1,4 +1,4 @@
-module github.com/dapperlabs/dappauth
+module github.com/portto/dappauth
 
 go 1.16
 

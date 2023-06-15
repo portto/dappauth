@@ -9,10 +9,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/dapperlabs/dappauth/ERCs"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	ethCrypto "github.com/ethereum/go-ethereum/crypto"
+	"github.com/portto/dappauth/ERCs"
 )
 
 var (
@@ -74,8 +74,19 @@ func (a *Authenticator) IsAuthorizedSigner(challenge, signature, addrHex string)
 		},
 	}
 
-	// we send just a regular hash, which then the smart contract hashes ontop to an erc191 hash
-	magicValue, errCA := _ERC1271CallerSession.IsValidSignature(scMessageHash(challenge), origSigBytes)
+	// we send a personal message hash first
+	var hash [32]byte
+	copy(hash[:], personalChallengeHash)
+	magicValue, errCA := _ERC1271CallerSession.IsValidSignature(hash, origSigBytes)
+	if errCA != nil {
+		return false, mergeErrors(errEOA, errCA)
+	}
+	if magicValue == _ERC1271MagicValue {
+		return true, nil
+	}
+
+	// ERC1654: we send just a regular hash, which then the smart contract hashes ontop to an erc191 hash
+	magicValue, errCA = _ERC1271CallerSession.IsValidSignature(scMessageHash(challenge), origSigBytes)
 	if errCA != nil {
 		return false, mergeErrors(errEOA, errCA)
 	}
